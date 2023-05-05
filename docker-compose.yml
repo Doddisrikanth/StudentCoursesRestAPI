@@ -9,6 +9,12 @@ services:
         published: 8080
         protocol: tcp
         mode: host
+    networks:
+      - students-srv-net
+    environment:
+      - MYSQL_SERVER=students-db
+    depends_on:
+      - students-db
   students-db:
     image: mysql:5.6
     environment:
@@ -16,6 +22,25 @@ services:
       - MYSQL_DATABASE=test
       - MYSQL_USER=directdevops
       - MYSQL_PASSWORD=directdevops
+    networks:
+      - students-db-net
+    volumes:
+      - type: volumes
+        source: students-db
+        target: /var/lib/mysql
+networks:
+  students-srv-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.101.0/24
+  students-db-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.102.0/24
+volumes:
+  students-db:
       
 
     
