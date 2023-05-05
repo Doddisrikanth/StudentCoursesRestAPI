@@ -25,7 +25,7 @@ services:
     networks:
       - students-db-net
     volumes:
-      - type: volumes
+      - type: volume
         source: students-db
         target: /var/lib/mysql
 networks:
